@@ -1,0 +1,32 @@
+2025-01-24 12:26:20,968 - INFO - API SENT - 2025-01-24T12:26:20.968434
+Additional Info:
+Payload:
+<?xml version="1.0" ?>
+<request>
+  <origin>12014640859</origin>
+  <destination>13526724239</destination>
+  <message>testing</message>
+</request>
+
+
+Additional Information:
+URL: https://api.iovox.com:444/SMS?v=3&method=sendSms
+Headers: {'username': 'gavin_pool', 'secureKey': '***masked***', 'Content-Type': 'application/xml'}
+-
+2025-01-24 12:26:22,599 - INFO - API RECEIVED - 2025-01-24T12:26:22.599041
+Additional Info:
+Payload:
+<?xml version="1.0" ?>
+<response>
+  <sms_activity_id>d179cff1-dc73-4549-8e4c-e00990a55d78</sms_activity_id>
+</response>
+
+
+Additional Information:
+Status Code: 201
+Headers: {'Date': 'Fri, 24 Jan 2025 17:26:20 GMT', 'Server': 'Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips mod_fcgid/2.3.9', 'Expires': 'Thu, 19 Nov 1981 08:52:00 GMT', 'Cache-Control': 'no-store, no-cache, must-revalidate, post-check=0, pre-check=0', 'Pragma': 'no-cache', 'Set-Cookie': 'PHPSESSID=91f009an0ec5794letn8joj5j5; path=/', 'Content-Length': '132', 'Keep-Alive': 'timeout=5, max=100', 'Connection': 'Keep-Alive', 'Content-Type': 'text/xml'}
+-
+2025-01-24 12:26:22,600 - INFO - SMS sent successfully with ID: d179cff1-dc73-4549-8e4c-e00990a55d78
+Additional Info:
+
+-
