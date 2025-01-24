@@ -6,8 +6,8 @@ Handles all user interface components and interactions.
 
 import tkinter as tk
 from tkinter import ttk, messagebox
-from src.services.sms import SMSService
-from src.utils.xml_builder import XMLBuilder
+from ..services.sms import SMSService
+from ..utils.xml_builder import XMLBuilder
 
 
 class SMSSenderApp:
