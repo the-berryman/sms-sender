@@ -5,7 +5,7 @@ This file is responsible for launching the main application window.
 """
 
 import tkinter as tk
-from gui.app import SMSSenderApp
+from .gui.app import SMSSenderApp
 
 def main():
     """Initialize and start the SMS Sender application"""
