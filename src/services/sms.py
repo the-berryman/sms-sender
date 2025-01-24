@@ -5,7 +5,7 @@ Service class for handling SMS-related operations including API interactions.
 
 import requests
 import xml.etree.ElementTree as ET
-from src.utils.xml_builder import XMLBuilder
+from ..utils.xml_builder import XMLBuilder
 
 
 class SMSService:
