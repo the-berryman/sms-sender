@@ -22,6 +22,11 @@ class SMSService:
         parsed = minidom.parseString(xml_string)
         return parsed.toprettyxml(indent="  ")
 
+    def _log_simple(self, message, level='info'):
+        """Log a simple message without detailed formatting"""
+        # Add empty details to satisfy the formatter
+        getattr(self.logger, level)(message, extra={'details': ''})
+
     def send_sms(self, data):
         """
         Send an SMS using the IOVOX API
@@ -40,10 +45,10 @@ class SMSService:
             base_url = "sandboxapi.iovox.com" if data['environment'] == "sandbox" else "api.iovox.com"
             url = f"https://{base_url}:444/SMS?v=3&method=sendSms"
 
-            # Prepare request headers
+            # Prepare request headers with sensitive information masked
             headers = {
                 'username': data['username'],
-                'secureKey': data['secure_key'],
+                'secureKey': '***masked***',  # Mask the secure key in logs
                 'Content-Type': 'application/xml'
             }
 
@@ -58,8 +63,12 @@ class SMSService:
                 f"URL: {url}\nHeaders: {headers}"
             )
 
+            # Prepare the actual headers for the request
+            request_headers = headers.copy()
+            request_headers['secureKey'] = data['secure_key']  # Use actual secure key
+
             # Send request to API
-            response = requests.post(url, data=payload, headers=headers)
+            response = requests.post(url, data=payload, headers=request_headers)
 
             # Log the response
             response_content = response.content.decode('utf-8') if response.content else "No response content"
@@ -74,19 +83,22 @@ class SMSService:
             if response.status_code == 201:
                 tree = ET.fromstring(response.content)
                 sms_id = tree.find('sms_activity_id').text
-                self.logger.info(f"SMS sent successfully with ID: {sms_id}")
+                self._log_simple(f"SMS sent successfully with ID: {sms_id}")
                 return {'sms_id': sms_id}
 
             # Handle error response
             else:
                 tree = ET.fromstring(response.content)
                 error = tree.find('error').text
-                self.logger.error(f"API Error: {error}")
-                raise Exception(f"API Error: {error}")
+                error_message = f"API Error: {error}"
+                self._log_simple(error_message, 'error')
+                raise Exception(error_message)
 
         except requests.exceptions.RequestException as e:
-            self.logger.error(f"Network error: {str(e)}", exc_info=True)
-            raise Exception(f"Network error: {str(e)}")
+            error_message = f"Network error: {str(e)}"
+            self._log_simple(error_message, 'error')
+            raise Exception(error_message)
         except Exception as e:
-            self.logger.error(f"Unexpected error: {str(e)}", exc_info=True)
+            error_message = f"Unexpected error: {str(e)}"
+            self._log_simple(error_message, 'error')
             raise
